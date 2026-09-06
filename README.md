@@ -1,12 +1,13 @@
-# Vélib GCP 101
+# Transports IDF GCP 101
 
-Projet d'apprentissage GCP de bout en bout : ingestion, entreposage, modélisation et mise en production de prédictions sur les données temps réel des stations Vélib' de Paris.
+Projet d'apprentissage GCP de bout en bout : ingestion, entreposage, modélisation et mise en production de prédictions sur les données temps réel du trafic des transports en commun d'Île-de-France (RER, métro, tram) via l'API PRIM d'Île-de-France Mobilités.
 
 ## Configuration
 
 - Projet GCP : `velib-gcp-101-ql`
 - Région : `europe-west1`
 - Budget mensuel avec alertes à 10 € / 50 € / 100 €
+- Source de données : [PRIM](https://prim.iledefrance-mobilites.fr/) (API `general-message`), lignes surveillées par défaut : RER A/B/C/D/E, Métro 1/4/14
 
 ## Plan (8 sprints)
 
