@@ -4,7 +4,7 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from google.cloud import storage
+from google.cloud import bigquery, storage
 
 from idfm_lines import DEFAULT_LINES, line_ref
 
@@ -45,9 +45,29 @@ def upload_to_gcs(bucket_name: str, payload: dict, fetched_at: datetime) -> str:
     return blob_path
 
 
+def load_to_bigquery(table: str, fetched_at: datetime, results: list[dict]) -> None:
+    rows = [
+        {
+            "fetched_at": fetched_at.isoformat(),
+            "line": r["line"],
+            "status": r["status"],
+            "error": r.get("error"),
+            "raw": r.get("raw"),
+        }
+        for r in results
+    ]
+    client = bigquery.Client()
+    job_config = bigquery.LoadJobConfig(
+        source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+        write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+    )
+    client.load_table_from_json(rows, table, job_config=job_config).result()
+
+
 def main() -> int:
     api_key = os.environ["IDFM_API_KEY"]
     bucket_name = os.environ["GCS_BUCKET"]
+    bq_table = os.environ["BQ_TABLE"]
     lines = os.environ.get("IDFM_LINES", ",".join(DEFAULT_LINES)).split(",")
 
     fetched_at = datetime.now(timezone.utc)
@@ -56,6 +76,9 @@ def main() -> int:
 
     blob_path = upload_to_gcs(bucket_name, payload, fetched_at)
     print(f"Uploaded gs://{bucket_name}/{blob_path}")
+
+    load_to_bigquery(bq_table, fetched_at, results)
+    print(f"Loaded {len(results)} rows into {bq_table}")
 
     if all(r["status"] == "error" for r in results):
         print("Toutes les lignes ont échoué", file=sys.stderr)
