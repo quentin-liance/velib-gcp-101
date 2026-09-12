@@ -13,7 +13,7 @@ Projet d'apprentissage GCP de bout en bout : ingestion, entreposage, modélisati
 
 - [x] Sprint 0 — Fondations (projet GCP, budget, région, repo, APIs)
 - [x] Sprint 1 — Ingestion (Cloud Run Job + Scheduler → GCS → BigQuery)
-- [ ] Sprint 2 — Modélisation des données (raw / staging / marts)
+- [x] Sprint 2 — Modélisation des données (raw / staging / marts)
 - [ ] Sprint 3 — Baseline BigQuery ML
 - [ ] Sprint 4 — Modèle custom sur Vertex AI
 - [ ] Sprint 5 — Service de prédiction (Cloud Run)
