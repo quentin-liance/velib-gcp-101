@@ -9,6 +9,10 @@ Projet d'apprentissage GCP de bout en bout : ingestion, entreposage, modélisati
 - Budget mensuel avec alertes à 10 € / 50 € / 100 €
 - Source de données : [PRIM](https://prim.iledefrance-mobilites.fr/) (API `general-message`), lignes surveillées par défaut : RER A/B/C/D/E, Métro 1/4/14
 
+## État actuel
+
+⏸️ **Projet en pause depuis le 2026-10-04.** Cloud Scheduler `idfm-ingest-schedule` suspendu (`gcloud scheduler jobs pause idfm-ingest-schedule --location=europe-west1`) — plus aucune ingestion ni coût actif, seules les données déjà collectées (GCS + BigQuery) sont conservées. Prochaine étape au retour : Sprint 4. Pour reprendre : `gcloud scheduler jobs resume idfm-ingest-schedule --location=europe-west1`.
+
 ## Plan (8 sprints)
 
 - [x] Sprint 0 — Fondations (projet GCP, budget, région, repo, APIs)
